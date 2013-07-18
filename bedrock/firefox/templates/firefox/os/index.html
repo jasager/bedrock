@@ -32,7 +32,7 @@
   <header id="masthead">
     <div class="wrapper stuck">
       <div class="inner">
-        <a href="https://www.mozilla.org/" id="tabzilla">Mozilla</a>
+        <a href="{{ url('mozorg.home') }}" id="tabzilla">Mozilla</a>
 
         {% block site_header_logo %}
         <h2 id="ffos-main-logo"><a href="#masthead" class="nav"><img src="{{ MEDIA_URL }}img/firefox/os/logo/firefox-os.png" alt="Firefox OS"></a></h2>
@@ -379,6 +379,11 @@
           <li>
             {% trans link="https://developer.mozilla.org/docs/Web/Apps/Publishing/Submitting_an_app" %}
             Get your app on Firefox OS <a href="{{link}}">Submit it to the Firefox Marketplace</a>
+            {% endtrans %}
+          </li>
+          <li>
+            {% trans link="/firefox/os/notes/" %}
+            View the version notes <a href="{{link}}">Read about features, changes and more</a>
             {% endtrans %}
           </li>
         </ul>

@@ -35,6 +35,7 @@
   var nav_height = $masthead.height();
 
   // adaptive scroll
+  var adaptive_text_offset = 200;
   var scene_hooks_top = 620;
   var $soccer_hook = $('#soccer-hook');
   var $cafe_hook = $('#cafe-hook');
@@ -42,41 +43,6 @@
 
   // have it all
   var $have_it_all = $('#have-it-all');
-
-  /*
-  * Handle page load re: scroll position
-  */
-
-  // if page loads with no hash, make sure user starts at top of page
-  function resetPageScroll() {
-    if (window.location.hash === '') {
-      if ($w.scrollTop() > 0) {
-        $w.scrollTop(0);
-      }
-    }
-  }
-
-  // fix for loading page with scroll position > 0
-  // can't fire immediately, must let browser do it's thing first
-  if (!isTouch) {
-    $(function() {
-      setTimeout(function() {
-        resetPageScroll();
-      }, 60);
-    });
-  }
-
-  /*
-  * Spoofing responsiveness
-  */
-
-  // refresh page when below 760px only for browsers supporting media queries
-  if (window.matchMedia) {
-    var mobile_sized = matchMedia("(max-width: 760px)");
-    mobile_sized.addListener(function() {
-      window.location.reload();
-    });
-  }
 
   /*
   * Rotating intro background
@@ -235,35 +201,43 @@
     return validateEmail(email) && $privacy.is(':checked');
   }
 
-  $('#footer-email-form').on('submit', function(e) {
-    e.preventDefault();
+  $(document).ready(function() {
+    // turn off default newsletter JS (from footer-email-form.js) and wire up our own
+    $('.newsletter-form').off('submit').on('submit', function(e) {
+      e.preventDefault();
 
-    if (validateForm()) {
-      $.ajax({
-        // Form action is just an anchor - must prepend current URL for IE.
-        url: document.location.href + $(this).attr('action'),
-        data: $(this).serialize(),
-        type: 'POST',
-        success: function(data) {
-          $('#footer-email-form').fadeOut('fast', function() {
-            $('#footer-email-thanks').fadeIn('fast');
-            setTimeout(function() {
-              Mozilla.Modal.close_modal();
-            }, 3000);
-          });
-        },
-        error: function() {
-          // ??
-        }
-      });
-    } else {
-      //highlight the required fields
-      if (validateEmail($('#id_email').val())) {
-        $('input[required]:not([type=email])').addClass('error');
+      if (validateForm()) {
+        var $form = $(this);
+
+        $.ajax({
+          // Form action is just an anchor - must prepend current URL for IE.
+          url: document.location.href + $form.attr('action'),
+          data: $form.serialize(),
+          type: 'POST',
+          success: function(data) {
+            $('#footer-email-form').fadeOut('fast', function() {
+              $('#footer-email-thanks').fadeIn('fast');
+              setTimeout(function() {
+                Mozilla.Modal.close_modal();
+              }, 3000);
+            });
+          },
+          error: function() {
+            // ??
+          }
+        });
+
+        //track GA event for newsletter signup
+        trackGAEvent(['_trackEvent', 'Newsletter Registration', 'submit', $form.find('input[name="newsletter"]').val()]);
       } else {
-        $('input[required]:not(:checked)').addClass('error');
+        //highlight the required fields
+        if (validateEmail($('#id_email').val())) {
+          $('input[required]:not([type=email])').addClass('error');
+        } else {
+          $('input[required]:not(:checked)').addClass('error');
+        }
       }
-    }
+    });
   });
 
   /*
@@ -395,7 +369,15 @@
       // GA track click
       navClickGATrack(this.hash);
 
-      var new_scroll = $($(this).attr('href')).offset().top;
+      var href = $(this).attr('href');
+      var new_scroll = $(href).offset().top;
+
+      // special case for adaptive section
+      // text is offset for scrolling, so we want to jump a bit
+      // further than the actual anchor
+      if (href == '#adaptive-wrapper') {
+        new_scroll += adaptive_text_offset;
+      }
 
       $w.scrollTop(new_scroll - nav_height);
     });
@@ -455,6 +437,9 @@
 
     // add scroller-on class for css repositioning, & set total height
     $('#adaptive-wrapper').addClass('scroller-on').css('height', pinDur + 'px');
+
+    // add offset to initial adaptive text (so user doesn't scroll by too fast)
+    $('#adaptive-app-search').css('top', adaptive_text_offset + 'px');
 
     // set height of blue mask covering bottom of adaptive content
     $adaptive_mask.css('height', 620);
@@ -658,6 +643,35 @@
     trackGAPageNoScroll();
     initTouchNavScroll();
   } else {
+    /*
+    * Desktop only fixes/hacks
+    */
+
+    // fix for loading page with scroll position > 0 (breaks scrollorama stuff)
+    // can't fire immediately, must let browser do it's thing first
+    $(function() {
+      setTimeout(function() {
+        if (window.location.hash === '') {
+          if ($w.scrollTop() > 0) {
+            $w.scrollTop(0);
+          }
+        }
+      }, 100);
+    });
+
+    // refresh page when below 760px only for browsers supporting media queries
+    // (spoof responsiveness)
+    if (window.matchMedia) {
+      var mobile_sized = matchMedia("(max-width: 760px)");
+      mobile_sized.addListener(function() {
+        window.location.reload();
+      });
+    }
+
+    /*
+    * Desktop interaction
+    */
+
     initIntroBGRotation();
     initAdaptiveAppSearchScroller();
     initNavScroll();

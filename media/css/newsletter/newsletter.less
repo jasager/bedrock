@@ -9,11 +9,11 @@
     h1 {
         line-height: 1.1;
         margin: 0;
-        span {
-            display: block;
-            font-size: 64px;
-        }
     }
+}
+
+#newsletter-existing #main-feature h1 span {
+    display: block;
 }
 
 #existing-newsletter-form {
@@ -97,10 +97,19 @@
             th {
                 text-align: left;
                 h4 {
-                    .open-sans;
-                    font-size: @baseFontSize;
-                    letter-spacing: normal;
-                    margin: 0;
+                    margin: 0 0 5px 0;
+                    font-size: 22px;
+                    .en-only {
+                        color: @textColorTertiary;
+                        font-size: @baseFontSize;
+                    }
+                }
+                .description {
+                    margin: 0.2em 0 0 0;
+                    color: @textColorTertiary;
+                    font-weight: normal;
+                    font-size: @smallFontSize;
+                    line-height: 1.3;
                 }
             }
             td {
@@ -111,6 +120,34 @@
     .submit-field {
         .span(6);
         .offset(3);
+    }
+}
+
+#newsletter-updated {
+    #content {
+        h3,
+        h4 {
+            .span-all();
+            text-align: center;
+            margin-bottom: @baseLine * 2;
+        }
+        .table {
+            .span(6);
+            margin: auto;
+            float: none;
+            textarea {
+                .border-box();
+                width: 100%;
+            }
+        }
+        .sub-feature {
+            text-align: center;
+            .span(4);
+            p,
+            h4 {
+                margin-bottom: @baseLine / 2;
+            }
+        }
     }
 }
 
@@ -175,6 +212,20 @@
         }
     }
 
+    #newsletter-updated {
+        #content {
+            .table {
+                .span_narrow(8);
+                margin: auto;
+                float: none;
+            }
+            .sub-feature {
+                .span_narrow(4);
+            }
+        }
+    }
+
+
     #newsletter {
         #main-feature {
             h1 {
@@ -203,9 +254,6 @@
     #main-feature {
         h1 {
             font-size: 26px;
-            span {
-                font-size: inherit;
-            }
         }
     }
 
@@ -225,6 +273,19 @@
             .span-all();
         }
     }
+
+    #newsletter-updated {
+        #content {
+            .sub-feature {
+                .span-all();
+                margin-bottom: @baseLine;
+            }
+            .table {
+                .span-all();
+            }
+        }
+    }
+
 
     #newsletter {
         #main-feature {

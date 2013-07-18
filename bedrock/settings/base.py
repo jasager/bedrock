@@ -377,6 +377,9 @@ MINIFY_BUNDLES = {
             'js/mozorg/contribute-university-ambassadors.js',
             'js/base/mozilla-input-placeholder.js',
         ),
+        'existing': (
+            'js/newsletter/existing.js',
+        ),
         'expanders': (
             'js/base/mozilla-expanders.js',
         ),
@@ -434,7 +437,6 @@ MINIFY_BUNDLES = {
             'js/firefox/fx.js',
         ),
         'firefox_happy': (
-            'js/libs/jquery-1.4.4.min.js',
             'js/firefox/happy.js',
         ),
         'firefox_new': (
@@ -467,7 +469,6 @@ MINIFY_BUNDLES = {
             'js/base/mozilla-expanders.js',
         ),
         'firefox_speed': (
-            'js/libs/jquery-1.4.4.min.js',
             'js/firefox/speed.js',
         ),
         'firefox_tech': (
@@ -481,11 +482,9 @@ MINIFY_BUNDLES = {
             'js/libs/socialshare.min.js',
         ),
         'geolocation': (
-            'js/libs/jquery-1.4.4.min.js',
             'js/libs/jquery.nyroModal.pack.js',
             'js/base/mozilla-expanders.js',
             'js/firefox/geolocation-demo.js',
-            'js/base/footer-email-form.js',
         ),
         'home': (
             'js/base/mozilla-pager.js',
@@ -599,6 +598,8 @@ DOMAIN_METHODS = {
 LESS_PREPROCESS = False
 LESS_BIN = 'lessc'
 
+FRAME_OPTIONS_ALLOW_FROM = 'https://www.optimizely.com'
+
 MIDDLEWARE_CLASSES = (
     'bedrock.mozorg.middleware.MozorgRequestTimingMiddleware',
     'django_statsd.middleware.GraphiteMiddleware',
@@ -617,6 +618,7 @@ MIDDLEWARE_CLASSES = (
     'bedrock.newsletter.middleware.NewsletterMiddleware',
     'dnt.middleware.DoNotTrackMiddleware',
     'lib.l10n_utils.middleware.FixLangFileTranslationsMiddleware',
+    'bedrock.mozorg.middleware.FrameOptionsHeader',
 ))
 
 INSTALLED_APPS = get_apps(exclude=(
@@ -677,7 +679,7 @@ HMAC_KEYS = {
 }
 
 FEEDS = {
-    'mozilla': 'http://blog.mozilla.org/feed/'
+    'mozilla': 'https://blog.mozilla.org/feed/'
 }
 
 GMAP_API_KEY = ''
@@ -704,8 +706,8 @@ LOCALES_WITH_TRANSITION = ['en-US', 'af', 'ar', 'ast', 'be', 'bg',
 
 # Locales showing the 15th Anniversary slideshow on /contribute
 LOCALES_WITH_MOZ15 = ['bg', 'cs', 'de', 'el', 'en-GB', 'en-US', 'es-AR', 'es-CL',
-                      'es-ES', 'es-MX', 'fr', 'fy-NL', 'hr', 'id', 'it', 'lt', 
-                      'ms', 'nl', 'pl' ,'pt-BR', 'ru', 'sl', 'sq', 'sr', 'ta', 
+                      'es-ES', 'es-MX', 'fr', 'fy-NL', 'hr', 'id', 'it', 'lt',
+                      'ms', 'nl', 'pl', 'pt-BR', 'ru', 'sl', 'sq', 'sr', 'ta',
                       'zh-CN', 'zh-TW']
 
 # reCAPTCHA keys
