@@ -335,7 +335,8 @@
     #action_buttons,
     #list_buttons,
     #special_buttons,
-    #usage_buttons {
+    #usage_examples,
+    #do_dont {
         .divider-dark;
         .clearfix;
         h2, h3, p {
@@ -407,7 +408,7 @@
     }
     #recommended_gradients h3,
     #examples h3 {
-        margin-top: 60px;
+        margin-top: 40px;
     }
     #main_colors,
     #all_colors {
@@ -560,14 +561,40 @@
             .span_guide(12);
             margin-bottom: @baseLine;
         }
+        .switcher-example {
+            .span_guide(4);
+            p {
+                margin-left: 0;
+            }
+            figure {
+                img {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-bottom: @baseLine;
+                }
+                figcaption {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-left: (@baseLine / 2);
+                    margin-bottom: @baseLine;
+                }
+            }
+        }
     }
-    figure {
-        .span_guide(4);
-        margin-top: @baseLine;
-        margin-bottom: (2 * @baseLine);
-        figcaption {
-            color: @darkThemeText;
-            margin: (@baseLine / 2) auto;
+    #sliders_handlers {
+        .switcher-example {
+            .span_guide(6);
+        }
+    }
+    #examples {
+        figure {
+            .span_guide(4);
+            margin-top: @baseLine;
+            margin-bottom: (2 * @baseLine);
+            figcaption {
+                color: @darkThemeText;
+                margin: (@baseLine / 2) auto;
+            }
         }
     }
     #downloads {
@@ -683,7 +710,7 @@
             .span_guide(12);
             margin-bottom: @baseLine;
         }
-        #feura_sans {
+        #fira_sans {
             .span_guide(12);
             margin-top: @baseLine;
             h3 {
@@ -741,6 +768,119 @@
                 padding: 20px;
                 border-top: 1px #0fabca solid;
             }
+        }
+    }
+    #downloads {
+        .span_guide(12);
+        border: 1px solid #f2f3f3;
+        p {
+            margin: @baseLine;
+        }
+    }
+}
+
+/* }}} */
+/* {{{ Firefox OS Lists */
+
+.firefox-os-lists {
+    #basics,
+    #common_lists,
+    #notifications,
+    #overlays,
+    #settings,
+    #drawer,
+    #buttons,
+    #examples {
+        .divider-dark;
+        .clearfix;
+        h2, p {
+            .span_guide(12);
+            margin-bottom: @baseLine;
+        }
+    }
+    figure {
+        .span_guide(7);
+        margin-top: @baseLine;
+        margin-bottom: (2 * @baseLine);
+        &.right {
+            .span_guide(5);
+            margin-top: @baseLine;
+            margin-bottom: (2 * @baseLine);
+            img {
+                max-width: none;
+            }
+        }
+        figcaption {
+            color: @darkThemeText;
+            margin: (@baseLine / 2) auto;
+        }
+    }
+    #common_lists {
+        figure.right img {
+            margin-left: -77px;
+        }
+        img.common-default,
+        img.common-events {
+            padding-top: 14px;
+        }
+        img.common-narrow {
+            padding-top: 17px;
+        }
+    }
+    #notifications {
+        figure.right img {
+            margin-left: -77px;
+        }
+        img.notifications-notifications {
+            padding-top: 12px;
+        }
+    }
+    #settings {
+        figure.right img {
+            margin-left: -91px;
+        }
+        img.settings-settings {
+            padding-top: 12px;
+        }
+    }
+    #drawer {
+        figure.right img {
+            margin-left: -127px;
+        }
+        img.drawer-drawer {
+            padding-top: 6px;
+        }
+    }
+    #buttons {
+        figure {
+            .span_guide(12);
+            text-align: center;
+        }
+        img {
+            margin: auto;
+        }
+        ol {
+            clear: left;
+            list-style-type: none;
+            padding: 20px 0 0 0;
+            li {
+                background: transparent url(/media/img/styleguide/products/firefoxos/ol-list.png) no-repeat 0 5px;
+                padding: 8px 0 8px 35px;
+                &:nth-child(2) {
+                    background-position: 0 -44px;
+                }
+                &:nth-child(3) {
+                    background-position: 0 -93px;
+                }
+                &:nth-child(4) {
+                    background-position: 0 -140px;
+                }
+            }
+        }
+    }
+    #examples {
+        figure {
+            .span_guide(4);
         }
     }
     #downloads {
